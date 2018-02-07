@@ -1,0 +1,42 @@
+version: '3.5'
+
+services: 
+  server:
+    image: "jboss/keycloak:3.4.3.Final"
+    
+    volumes:
+      - "data:/opt/jboss"
+    
+    environment:
+      - "POSTGRES_PORT_5432_TCP_ADDR=postgres"
+      - "POSTGRES_DATABASE=${POSTGRES_DATABASE}"
+      - "POSTGRES_USER=${POSTGRES_USER}"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+
+    networks:
+      - "network"
+
+    restart: always
+
+  db:
+    image: "postgres:10.1-alpine"
+    volumes:
+      - "postgres-db:/var/lib/postgresql/data"
+    environment:
+      - "POSTGRES_DB=${POSTGRES_DB}"
+      - "POSTGRES_USER=${POSTGRES_USER}"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+
+    networks:
+      network:
+        aliases:
+          - "postgres"
+
+    restart: always
+
+volumes:
+  data:
+  postgres-db:
+
+networks:
+  network:
