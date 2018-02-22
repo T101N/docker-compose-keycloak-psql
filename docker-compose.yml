@@ -19,7 +19,7 @@ services:
       - "data:/opt/jboss"
     
     environment:
-      - "POSTGRES_PORT_5432_TCP_ADDR=postgres"
+      - "POSTGRES_PORT_5432_TCP_ADDR=${POSTGRES_DB}"
       - "POSTGRES_DATABASE=${POSTGRES_DATABASE}"
       - "POSTGRES_USER=${POSTGRES_USER}"
       - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
@@ -41,7 +41,7 @@ services:
     networks:
       network:
         aliases:
-          - "postgres"
+          - "${POSTGRES_DATABASE}"
 
     restart: always
 
