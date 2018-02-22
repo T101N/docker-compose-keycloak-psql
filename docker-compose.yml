@@ -1,6 +1,17 @@
 version: '3.5'
 
 services: 
+  proxy:
+    image: "nginx:1.13-alpine"
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - "network"
+    volumes:
+      - "nginx:/etc/nginx"
+    restart: always
+
   server:
     image: "jboss/keycloak:3.4.3.Final"
     
@@ -37,6 +48,7 @@ services:
 volumes:
   data:
   postgres-db:
+  nginx:
 
 networks:
   network:
